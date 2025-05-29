@@ -1,0 +1,28 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.drop-zone {
+    height: 500px;
+    border: 2px dashed #ccc;
+    transition: background-color 0.3s;
+    overflow-y: auto;
+}
+
+.drop-zone:hover {
+    background-color: #f8f9fa;
+}
+
+.dragging {
+    opacity: 0.5;
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s ease;
+}
+
+.drop-preview-line {
+    height: 4px;
+    background-color: #007bff;
+    margin: 5px 0;
+    border-radius: 2px;
+}
