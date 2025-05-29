@@ -8,15 +8,21 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /var/www/html
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
 RUN chown -R www-data:www-data /var/www/html \
     && a2enmod rewrite
 
 WORKDIR /var/www/html
+
 RUN composer install --no-dev --optimize-autoloader \
     && cp .env.example .env \
     && php artisan key:generate \
     && php artisan config:cache
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 80
