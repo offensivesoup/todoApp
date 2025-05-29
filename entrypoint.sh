@@ -8,4 +8,6 @@ cd /var/www/html
 php artisan config:clear
 php artisan config:cache
 
+php artisan migrate
+
 exec apache2-foreground
