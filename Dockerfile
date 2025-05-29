@@ -7,13 +7,16 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /var/www/html
-WORKDIR /var/www/html
 
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+
+RUN chown -R www-data:www-data /var/www/html \
+    && a2enmod rewrite
+
+WORKDIR /var/www/html
 RUN composer install --no-dev --optimize-autoloader \
     && cp .env.example .env \
     && php artisan key:generate \
     && php artisan config:cache
-
-RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
